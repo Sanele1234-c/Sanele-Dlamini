@@ -1,3 +1,5 @@
+package com.jotham.sanele;
+
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,8 +10,8 @@ import java.util.logging.Logger;
 public class Production {
     private String farmingCode;
     private String farmerID;
-    private String regionCode;
-    private String product;
+    private double totalCost;
+    private double totalReturn;
     private String grade;
     private Boolean isProductionAdded;
     private Boolean isProductionDeleted;
@@ -33,25 +35,20 @@ public class Production {
             farmerID = value;
         }
     }
-
-    public String getRegionCode() {
-        return regionCode;
+    public double getTotalCost() {
+        return totalCost;
     }
 
-    public void setRegionCode(String value) {
-        if (!(value.isEmpty())){
-            regionCode = value;
-        }
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 
-    public String getProduct() {
-        return product;
+    public double getTotalReturn() {
+        return totalReturn;
     }
 
-    public void setProduct(String value) {
-        if (!(value.isEmpty())){
-            product = value;
-        }
+    public void setTotalReturn(double totalReturn) {
+        this.totalReturn = totalReturn;
     }
 
     public String getGrade() {
@@ -96,8 +93,8 @@ public class Production {
         String query;
         query = "INSERT INTO Farmer VALUES('"+ this.farmerID +
                 "','"+this.farmingCode+
-                "','"+this.regionCode+
-                "','"+this.product+
+                "','"+this.totalCost +
+                "','"+this.totalReturn +
                 "','"+this.grade+"')";
         Statement st = db.createStatement();
 
