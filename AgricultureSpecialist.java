@@ -1,3 +1,5 @@
+package goldenfarm;
+
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,8 +92,8 @@ public class AgricultureSpecialist {
     public void setIsDeleted(Boolean deleted) {
         isDeleted = deleted;
     }
-    Boolean checkEmployeeNumber(String emplyNum){
-        if (emplyNum.equalsIgnoreCase(getEmployeeNumber())){
+    Boolean checkEmployeeNumber(String employeeNumber){
+        if (employeeNumber.equalsIgnoreCase(getEmployeeNumber())){
             return true;
         }else {
             return false;
@@ -100,18 +102,19 @@ public class AgricultureSpecialist {
     void AddAgricultureSpecialistDetails()
     {
         // insert into database
-        dbConnect db = new dbConnect();
+        DbConnect db = new DbConnect();
         db.connect();
 
         Boolean x;
         x=true;
         String query;
         query = "INSERT INTO AgricSpec VALUES('"+ this.employeeNumber +
+                "','"+this.regionCode+
                 "','"+this.agricName +
                 "','"+this.agricSurname+
                 "','"+this.contactNumber+
-                "','"+this.emailAddress+
-                "','"+this.regionCode+"')";
+                "','"+this.emailAddress+"')";
+              
         Statement st = db.createStatement();
 
         try
@@ -133,11 +136,11 @@ public class AgricultureSpecialist {
 
     void deleteAgricultureSpecialist()
     {
-        dbConnect db = new dbConnect();
+        DbConnect db = new DbConnect();
         db.connect();
         Boolean x;
         x=true;
-        String query = "DELETE FROM agricSpec WHERE emplyNum='"+this.getEmployeeNumber()+"'";
+        String query = "DELETE FROM agricSpec WHERE employeeNumber='"+this.getEmployeeNumber()+"'";
         Statement st = db.createStatement();
         try
         {
@@ -159,9 +162,9 @@ public class AgricultureSpecialist {
 
     ResultSet ViewAgricultureSpecialist(String emplyNum)
     {
-        dbConnect db = new dbConnect();
+        DbConnect db = new DbConnect();
         db.connect();
-        String query ="SELECT * FROM agricSpec WHERE emplyNum='"+employeeNumber+"'";
+        String query ="SELECT * FROM agricSpec WHERE employeeNumber='"+employeeNumber+"'";
         Statement st = db.createStatement();
         try
         {
@@ -178,16 +181,16 @@ public class AgricultureSpecialist {
 
     void UpdateAgricultureSpecialist(String employeeNumber)
     {
-        dbConnect db = new dbConnect();
+        DbConnect db = new DbConnect();
         db.connect();
         Boolean isAgricultureSpecialistUpdated = true;
-        String query = "UPDATE AgricSpec SET emplyNum='"+this.employeeNumber+
+        String query = "UPDATE AgricSpec SET employeeNumber='"+this.employeeNumber+
+                 "',regionCode='"+this.regionCode +
                 "',agricName='"+this.agricName+
                 "',agricSurname='"+this.agricSurname +
                 "',contactNumber='"+this.contactNumber +
-                "',emailAddress='"+this.emailAddress+
-                "',regionCode='"+this.regionCode +
-                "' WHERE emplyNum='"+employeeNumber+"'";
+                "',emailAddress='"+this.emailAddress+              
+                "' WHERE employeeNumber='"+employeeNumber+"'";
         Statement st = db.createStatement();
         try
         {
