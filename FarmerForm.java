@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -34,7 +35,7 @@ public class FarmerForm extends javax.swing.JFrame {
        Boolean x;
        x=true;
        String query;
-       query = "select emplyNum,Name,regionCode from aagricSpec ORDER BY regionCode ASC";
+       query = "select farmerID,Name,regionCode from farmer ORDER BY farmerID ASC";
             
        
        Statement st = db.createStatement();
@@ -57,7 +58,7 @@ public class FarmerForm extends javax.swing.JFrame {
        Boolean x;
        x=true;
        String query;
-       query = "select regionCode,regionName from region ORDER BY regionCode ASC";
+       query = "select regionCode,name from region ORDER BY regionCode ASC";
             
        
        Statement st = db.createStatement();
@@ -247,7 +248,7 @@ public class FarmerForm extends javax.swing.JFrame {
         jScrollPane2.setViewportView(Table_FarmingTypes);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel11.setText("AVAILABLE TYPES OF FARMING");
+        jLabel11.setText("AVAILABLE REGIONS");
 
         jLabel12.setText("GENDER");
 
@@ -368,6 +369,7 @@ public class FarmerForm extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
          Farmer f = new Farmer ();
+         DbConnect dbConnect = new DbConnect();
          if (!(this.txtFarmerId.getText().isEmpty()))
         {
             if (!(this.txtFarmerName.getText().isEmpty()))
@@ -383,7 +385,7 @@ public class FarmerForm extends javax.swing.JFrame {
                     f.setContactNumber(this.txtCellphone.getText());
                     f.setRegionCode(this.txtRegionCode.getText());
                     
-                    f.AddFarmerDetails();  
+                    f.AddFarmerDetails(dbConnect);
                     if (f.getFarmerAdded())
                     {
                         
@@ -391,8 +393,8 @@ public class FarmerForm extends javax.swing.JFrame {
                      txtFarmerName.setText("");
                      txtFarmerSurname.setText("");
                      txtDateOfBirth.setText("");
-                     txtNextOfKeen.setText("");
                      txtCellphone.setText("");
+                     txtNextOfKeen.setText("");                   
                      txtRegionCode.setText("");
                      updatetable();
                      updatetable2();
@@ -406,12 +408,12 @@ public class FarmerForm extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(rootPane, "Make sure student name is not empty");  
+                JOptionPane.showMessageDialog(rootPane, "Make sure farmer name is not empty");  
             }          
         }
         else
         {
-            JOptionPane.showMessageDialog(rootPane, "Make sure student ID is not empty");
+            JOptionPane.showMessageDialog(rootPane, "Make sure farmer ID is not empty");
         }      
                
     }//GEN-LAST:event_btnAddActionPerformed
@@ -422,8 +424,8 @@ public class FarmerForm extends javax.swing.JFrame {
                 txtFarmerName.setText("");
                 txtFarmerSurname.setText("");
                txtDateOfBirth.setText("");
+               txtCellphone.setText("");
                 txtNextOfKeen.setText("");
-                txtCellphone.setText("");
                txtRegionCode.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
 
@@ -441,8 +443,8 @@ public class FarmerForm extends javax.swing.JFrame {
                    txtFarmerName.setText("");
                    txtFarmerSurname.setText("");
                  txtDateOfBirth.setText("");
-                   txtNextOfKeen.setText("");
-                   txtCellphone.setText("");
+                 txtCellphone.setText("");
+                   txtNextOfKeen.setText("");                 
                    txtRegionCode.setText("");
                     updatetable();
                     updatetable2();
@@ -451,10 +453,9 @@ public class FarmerForm extends javax.swing.JFrame {
                    {              
                        txtFarmerId.setText("");
                        txtFarmerName.setText("");
-                       txtFarmerSurname.setText("");
-                     
-                       txtNextOfKeen.setText("");
+                       txtFarmerSurname.setText("");                                           
                        txtCellphone.setText("");
+                        txtNextOfKeen.setText("");
                        txtRegionCode.setText("");
                         updatetable();
                         updatetable2();
@@ -479,8 +480,8 @@ public class FarmerForm extends javax.swing.JFrame {
          txtFarmerSurname.setText("");
         txtFarmerName.setText("");
        txtDateOfBirth.setText("");
-        txtNextOfKeen.setText("");
         txtCellphone.setText("");
+         txtNextOfKeen.setText("");
         txtRegionCode.setText("");
         
         Farmer s = new Farmer();
@@ -495,10 +496,10 @@ public class FarmerForm extends javax.swing.JFrame {
                    {              
                        this.txtFarmerName.setText(rec.getString(2));
                        this.txtFarmerSurname.setText(rec.getString(3));
-                       this.txtNextOfKeen.setText(rec.getString(6));
-                       this.txtCellphone.setText(rec.getString(7));
-                       this.cmbGender.setSelectedItem(rec.getString(5));
                        this.txtDateOfBirth.setText(rec.getString(4));
+                        this.cmbGender.setSelectedItem(rec.getString(5));
+                       this.txtCellphone.setText(rec.getString(6));
+                       this.txtNextOfKeen.setText(rec.getString(7));
                        this.txtRegionCode.setText(rec.getString(8));
                             
                    }
@@ -537,18 +538,18 @@ public class FarmerForm extends javax.swing.JFrame {
                 s.setFarmerID(this.txtFarmerId.getText());
                 s.setName(this.txtFarmerName.getText());
                 s.setSurname(this.txtFarmerSurname.getText());
-                s.setDateOfBirth(this.txtDateOfBirth.getText());  
-                s.setNextOfKeen(this.txtNextOfKeen.getText());
+                s.setDateOfBirth(this.txtDateOfBirth.getText()); 
                 s.setContactNumber(this.txtCellphone.getText());
+                s.setNextOfKeen(this.txtNextOfKeen.getText());                
                   s.setRegionCode(this.txtRegionCode.getText());
                  
                 s.UpdateFarmer(this.txtFarmerId.getText());
                 txtFarmerId.setText("");
                 txtFarmerName.setText("");
                 txtFarmerSurname.setText("");
-                txtDateOfBirth.setText("");
-                txtNextOfKeen.setText("");
+                txtDateOfBirth.setText("");              
                 txtCellphone.setText("");
+                txtNextOfKeen.setText("");
                 txtRegionCode.setText("");
                 updatetable();
                 

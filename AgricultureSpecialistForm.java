@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -32,7 +33,7 @@ public class AgricultureSpecialistForm extends javax.swing.JFrame {
        Boolean x;
        x=true;
        String query;
-       query = "select farmerId,farmerName,regionCode from farmer ORDER BY regionCode ASC";
+       query = "select employeeNumber,regionCode,agricName,emailAddress from agricSpec ORDER BY employeeNumber ASC";
             
        
        Statement st = db.createStatement();
@@ -295,7 +296,6 @@ public class AgricultureSpecialistForm extends javax.swing.JFrame {
                      a.setRegionCode(this.txtRegionCode.getText());
                     a.setAgricName(this.txtName.getText());
                     a.setAgricSurname(this.txtSurname.getText());
-                    a.setContactNumber(this.txtCellphoneNumber.getText());
                     a.setContactNumber(this.txtCellphoneNumber.getText());
                     a.setEmailAddress(this.txtEmailAddress.getText());
                     
