@@ -1,4 +1,4 @@
-package com.jotham.sanele;
+package goldenfarm;
 
 import javax.swing.*;
 import java.sql.ResultSet;
@@ -10,8 +10,9 @@ import java.util.logging.Logger;
 public class Production {
     private String farmingCode;
     private String farmerID;
-    private double totalCost;
-    private double totalReturn;
+    private String regionCode;
+    private String totalCost;
+    private String totalReturn;
     private String grade;
     private Boolean isProductionAdded;
     private Boolean isProductionDeleted;
@@ -35,19 +36,30 @@ public class Production {
             farmerID = value;
         }
     }
-    public double getTotalCost() {
+
+    public String getRegionCode() {
+        return regionCode;
+    }
+
+    public void setRegionCode(String value) {
+        if (!(value.isEmpty())){
+            regionCode = value;
+        }
+    }
+
+    public String getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(double totalCost) {
+    public void setTotalCost(String totalCost) {
         this.totalCost = totalCost;
     }
 
-    public double getTotalReturn() {
+    public String getTotalReturn() {
         return totalReturn;
     }
 
-    public void setTotalReturn(double totalReturn) {
+    public void setTotalReturn(String totalReturn) {
         this.totalReturn = totalReturn;
     }
 
@@ -76,7 +88,7 @@ public class Production {
     public void setProductionDeleted(Boolean value) {
         this.isProductionDeleted = value;
     }
-    Boolean checkFarmerID(String farmID){
+    Boolean checkFarmerID(String farmerID){
         if (farmID.equalsIgnoreCase(getFarmerID())){
             return true;
         }else {
@@ -85,17 +97,18 @@ public class Production {
     }
     void AddProductionDetails(){
         // insert into database
-        dbConnect db = new dbConnect();
+        DbConnect db = new DbConnect();
         db.connect();
 
         Boolean x;
         x=true;
         String query;
-        query = "INSERT INTO Farmer VALUES('"+ this.farmerID +
+        query = "INSERT INTO production VALUES('"+ this.farmerID +
                 "','"+this.farmingCode+
                 "','"+this.totalCost +
-                "','"+this.totalReturn +
-                "','"+this.grade+"')";
+                "','"+this.totalReturn +               
+                "','"+this.grade+
+                "','"+this.regionCode+"')";
         Statement st = db.createStatement();
 
         try
@@ -117,11 +130,11 @@ public class Production {
 
     void deleteProduction()
     {
-        dbConnect db = new dbConnect();
+        DbConnect db = new DbConnect();
         db.connect();
         Boolean x;
         x=true;
-        String query = "DELETE FROM production WHERE studId='"+this.getFarmerID()+"'";
+        String query = "DELETE FROM production WHERE farmerID='"+this.getFarmerID()+"'";
         Statement st = db.createStatement();
         try
         {
@@ -129,23 +142,23 @@ public class Production {
             if (x.equals(true))
                 this.setProductionDeleted(true);
             {
-                JOptionPane.showMessageDialog(null, "The mark is successfully deleted");
+                JOptionPane.showMessageDialog(null, "The production is successfully deleted");
             }
         }
         catch (SQLException ex)
         {
             Logger.getLogger(Production.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage());
-            JOptionPane.showMessageDialog(null, "The system could not  deleted the mark");
+            JOptionPane.showMessageDialog(null, "The system could not  deleted the product");
             this.setProductionDeleted(false);
         }
     }
 
-    ResultSet ViewIndividualMark(String studID)
+    ResultSet ViewIndividualProduction(String FarmerID)
     {
-        dbConnect db = new dbConnect();
+        DbConnect db = new DbConnect();
         db.connect();
-        String query ="SELECT * FROM production WHERE farmId='"+farmerID+"'";
+        String query ="SELECT * FROM production WHERE farmerID='"+farmerID+"'";
         Statement st = db.createStatement();
         try
         {
